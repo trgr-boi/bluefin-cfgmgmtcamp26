@@ -12,10 +12,17 @@ image-version: 42 # latest is also supported if you want new updates ASAP
 # module configuration, executed in order
 # you can include multiple instances of the same module
 modules:
+  # NOTE: op deze manier kan je modular werken
+  - from-file: features/wireshark.yml
+
   - type: files
+    # NOTE: dit is om files te copiëren
     files:
       - source: system
         destination: / # copies files/system/* (* means everything inside it) into your image's root folder /
+      # NOTE: voor scripts?
+      - source: scripts
+        destination: /home/trgr/.local/bin/
 
   - type: dnf
     repos:
@@ -25,6 +32,9 @@ modules:
       packages:
         - micro
         - starship
+        - gopass
+        - age
+        - chezmoi
     remove:
       packages:
         # example: removing firefox (in favor of the flatpak)
